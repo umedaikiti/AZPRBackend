@@ -1,0 +1,25 @@
+「CPU自作入門　～HDLによる論理設計・基板製作・プログラミング～」のAZ Processorのバックエンドを作ってみようとしたものです。フルスクラッチで作るのは大変そうだったのでsabottendaさんのllvm-sample-targetをベースにして作りました。
+LLVMの理解が不十分なため、おかしいところもきっと多いと思います。
+
+sabottendaさんのllvm-sample-target
+https://github.com/sabottenda/llvm-sample-target
+「CPU自作入門　～HDLによる論理設計・基板製作・プログラミング～」
+http://gihyo.jp/book/2012/978-4-7741-5338-4?ard=1382952989
+AZ Processorの仕様
+http://gihyo.jp/book/2012/978-4-7741-5338-4/support
+
+## setup azpr target
+$ wget http://llvm.org/releases/3.2/llvm-3.2.src.tar.gz
+$ tar zxf llvm-3.2.src.tar.gz
+$ cd llvm-3.2.src/lib/Target
+$ git clone https://github.com/umedaikiti/AZPRBackend.git AZPR
+$ cd - && cd llvm-3.2.src
+$ patch -p1 < ./lib/Target/AZPR/config.patch
+
+## compile and install
+$ cd -
+$ mkdir build
+$ cd build
+$ ../llvm-3.2.src/configure --prefix=/opt/llvm --enable-debug-runtime --enable-assertions --enable-debug-symbols --disable-optimized --enable-debug-runtime
+$ make -j4
+$ sudo make install
